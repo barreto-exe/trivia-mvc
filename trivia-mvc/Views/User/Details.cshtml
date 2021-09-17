@@ -1,0 +1,21 @@
+﻿@model User
+@{
+	bool exists = Model != null;
+	if(!exists)
+	{
+		ViewData["Title"] = "Detalles del usuario";
+	}
+	else
+	{
+		ViewData["Title"] = "Detalles del usuario: " + Model.Username;
+	}
+}
+
+@if(exists)
+{
+	<p>Existe: @Model.IdUser</p>
+}
+else
+{
+	<p>No existe ese usuario.</p>
+}
