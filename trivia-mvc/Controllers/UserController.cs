@@ -88,9 +88,17 @@ namespace trivia_mvc.Controllers
         }
 
         // GET: UserController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            var entity = triviaContext.Users.SingleOrDefault(u => u.IdUser == id);
+
+            if (entity != null)
+            {
+                triviaContext.Users.Remove(entity);
+                await triviaContext.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: UserController/Delete/5

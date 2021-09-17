@@ -10,6 +10,19 @@
 		ViewData["Title"] = "Detalles del usuario: " + Model.Username;
 	}
 }
+<h1>@ViewData["Title"]</h1>
+
+<div style="margin: 10px 0px;">
+	<a class="btn btn-primary" 
+		asp-controller="User" 
+		asp-action="Edit" 
+		asp-route-id="@Model.IdUser">Editar</a>
+	<a class="btn btn-danger" 
+		asp-controller="User" 
+		asp-action="Delete" 
+		asp-route-id="@Model.IdUser">Eliminar</a>
+</div>
+
 
 @if(exists)
 {
@@ -17,5 +30,5 @@
 }
 else
 {
-	<p>No existe ese usuario.</p>
+	<p>No existe el usuario solicitado.</p>
 }
