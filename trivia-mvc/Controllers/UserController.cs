@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using trivia_mvc.DataContexts;
+using trivia_mvc.Models;
 
 namespace trivia_mvc.Controllers
 {
@@ -41,16 +42,28 @@ namespace trivia_mvc.Controllers
         // POST: UserController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var newUser = new User()
+                {
+                    Username = collection["Username"],
+                    DateBirth = Convert.ToDateTime(collection["DateBirth"]),
+                    DateIn = DateTime.Now,
+                };
+
+                triviaContext.Users.Add(newUser);
+                await triviaContext.SaveChangesAsync();
+
+                //return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                //return View();
             }
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: UserController/Edit/5

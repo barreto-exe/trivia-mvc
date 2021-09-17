@@ -2,13 +2,11 @@
 @{
 	ViewData["Title"] = "Usuarios";
 }
-
-
 <h1>@ViewData["Title"]</h1>
 
-<button asp-controller="User" asp-action="Create">Crear</button>
+<a class="btn btn-primary" style="margin: 10px 0px;" asp-controller="User" asp-action="Create">Crear</a>
 
-<table class="table table-dark table-hover">
+<table class="table table-primary table-hover">
   <thead>
     <tr>
       <th scope="col">Id</th>
@@ -23,7 +21,7 @@
     <tr>
       <td><a asp-controller="User" asp-action="Details" asp-route-id="@obj.IdUser">@obj.IdUser</a></td>
       <td>@obj.Username</td>
-      <td>@obj.DateBirth</td>
+      <td>@obj.DateBirth.ToString("dd-MM-yyyy")</td>
       <td>@obj.DateIn</td>
     </tr>
 }
