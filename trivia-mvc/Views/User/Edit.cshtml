@@ -1,0 +1,28 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Editar usuario";
+
+    bool nullUser = Model == null;
+}
+<h1>@ViewData["Title"]</h1>
+<br />
+
+@if(!nullUser)
+{
+    <form class="container" style="max-width: 500px; float: left;" method="POST">
+        <div class="input-group mb-3">
+            <label asp-for="Username" style="margin-right: 10px;">Nombre de usuario:</label>
+            <input asp-for="Username" class="form-control"/>
+        </div>
+
+        <div class="input-group mb-3">
+            <label asp-for="DateBirth" style="margin-right: 10px;">Fecha de nacimiento: </label>
+            <input asp-for="DateBirth" class="form-control" type="date"/>
+        </div>
+        <input class="btn btn-primary" type="submit"/>
+    </form>
+}
+else
+{
+    <p>No existe el usuario que quiere editar.</p>
+}

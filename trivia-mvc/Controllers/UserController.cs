@@ -4,45 +4,40 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using trivia_mvc.DataContexts;
+using trivia_mvc.DataAccess.Interfaces;
 using trivia_mvc.Models;
 
 namespace trivia_mvc.Controllers
 {
     public class UserController : Controller
     {
-        private readonly TriviaContext triviaContext;
-        public UserController(TriviaContext triviaContext)
+        private IUserRepository userRepository;
+        public UserController(IUserRepository userRepository)
         {
-            this.triviaContext = triviaContext;
+            this.userRepository = userRepository;
         }
 
 
-        // GET: UserController
         public async Task<IActionResult> Index()
         {
-            var users = triviaContext.Users.ToList();
+            var users = await userRepository.Get();
             return View(users);
         }
 
-        // GET: UserController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            var user = triviaContext.Users.SingleOrDefault(u => u.IdUser == id);
-
+            var user = await userRepository.GetById(id);
             return View(user);
         }
 
-        // GET: UserController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: UserController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(IFormCollection collection)
+        public async Task<ActionResult> Add(IFormCollection collection)
         {
             try
             {
@@ -53,8 +48,7 @@ namespace trivia_mvc.Controllers
                     DateIn = DateTime.Now,
                 };
 
-                triviaContext.Users.Add(newUser);
-                await triviaContext.SaveChangesAsync();
+                await userRepository.Add(newUser);
 
                 //return RedirectToAction(nameof(Index));
             }
@@ -66,19 +60,27 @@ namespace trivia_mvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: UserController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var user = await userRepository.GetById(id);
+            return View(user);
         }
 
-        // POST: UserController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
             try
             {
+                var user = new User()
+                {
+                    IdUser = id,
+                    Username = collection["Username"],
+                    DateBirth = Convert.ToDateTime(collection["DateBirth"]),
+                };
+
+                await userRepository.Edit(user);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -87,33 +89,10 @@ namespace trivia_mvc.Controllers
             }
         }
 
-        // GET: UserController/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            var entity = triviaContext.Users.SingleOrDefault(u => u.IdUser == id);
-
-            if (entity != null)
-            {
-                triviaContext.Users.Remove(entity);
-                await triviaContext.SaveChangesAsync();
-            }
-
+            await userRepository.Delete(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        // POST: UserController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

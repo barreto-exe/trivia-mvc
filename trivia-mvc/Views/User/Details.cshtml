@@ -26,9 +26,14 @@
 
 @if(exists)
 {
-	<p>Existe: @Model.IdUser</p>
+<ul class="list-group" style="max-width: 500px;">
+	<li class="list-group-item"><b>ID:</b> @Model.IdUser</li>
+	<li class="list-group-item"><b>Nombre de usuario:</b> @Model.Username</li>
+	<li class="list-group-item"><b>Fecha nacimiento:</b> @Model.DateBirth.ToString("dd/MM/yyyy")</li>
+	<li class="list-group-item"><b>Fecha ingreso:</b> @Model.DateIn</li>
+</ul>
 }
 else
 {
-	<p>No existe el usuario solicitado.</p>
+	<h2>No existe el usuario solicitado.</h2>
 }

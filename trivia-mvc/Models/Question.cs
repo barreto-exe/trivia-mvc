@@ -13,7 +13,7 @@ namespace trivia_mvc.Models
             TriviasQuestionsReceiveds = new HashSet<TriviasQuestionsReceived>();
         }
 
-        public short IdQuestion { get; set; }
+        public int IdQuestion { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
 

@@ -9,7 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using trivia_mvc.DataContexts;
+using trivia_mvc.DataAccess;
+using trivia_mvc.DataAccess.Interfaces;
+using trivia_mvc.DataAccess.Repositories;
 using trivia_mvc.Models;
 
 namespace trivia_mvc
@@ -29,6 +31,8 @@ namespace trivia_mvc
             services.AddControllersWithViews();
 
             services.AddDbContext<TriviaContext>(options => options.UseNpgsql(Configuration.GetConnectionString("TriviaPgsql")));
+
+            services.AddTransient<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

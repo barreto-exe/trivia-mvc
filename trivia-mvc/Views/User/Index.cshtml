@@ -6,6 +6,19 @@
 
 <a class="btn btn-primary" style="margin: 10px 0px;" asp-controller="User" asp-action="Create">Crear</a>
 
+@if (ViewBag.Mensaje != null)
+{
+<div class="alert alert-success" role="alert">
+    @ViewBag.Mensaje
+</div>
+}
+@if (ViewBag.MensajeError != null)
+{
+<div class="alert alert-danger" role="alert">
+    @ViewBag.MensajeError
+</div>
+}
+
 <table class="table table-primary table-hover">
   <thead>
     <tr>
@@ -21,7 +34,7 @@
     <tr>
       <td><a asp-controller="User" asp-action="Details" asp-route-id="@obj.IdUser">@obj.IdUser</a></td>
       <td>@obj.Username</td>
-      <td>@obj.DateBirth.ToString("dd-MM-yyyy")</td>
+      <td>@obj.DateBirth.ToString("dd/MM/yyyy")</td>
       <td>@obj.DateIn</td>
     </tr>
 }

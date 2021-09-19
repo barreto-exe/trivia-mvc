@@ -5,7 +5,7 @@ using trivia_mvc.Models;
 
 #nullable disable
 
-namespace trivia_mvc.DataContexts
+namespace trivia_mvc.DataAccess
 {
     public partial class TriviaContext : DbContext
     {

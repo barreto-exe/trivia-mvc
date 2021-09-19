@@ -7,8 +7,8 @@ namespace trivia_mvc.Models
 {
     public partial class Answer
     {
-        public short IdQuestion { get; set; }
-        public short IdAnswer { get; set; }
+        public int IdQuestion { get; set; }
+        public int IdAnswer { get; set; }
         public string Description { get; set; }
         public bool IsCorrect { get; set; }
 
